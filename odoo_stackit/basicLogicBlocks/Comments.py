@@ -1,7 +1,8 @@
-from comments.models import Comments
-from questions.models import Question
+from comments.models import Comments, Votes
 
 def filter_comments(**kwargs):
+    from questions.models import Question
+
     """
     Filters comments based on provided criteria.
     :param kwargs: Filtering criteria such as 'author', 'previous_comment', etc.
@@ -39,3 +40,31 @@ def filter_comments(**kwargs):
             'comments': [comment_dict[c.id] for c in all_comments_for_question]
         })
     return all_comments
+
+
+def create_comment(**kwargs):
+    """
+    Creates a new comment with the provided data.
+    :param kwargs: Data for the new comment.
+    :return: The created comment instance.
+    """
+    comment = Comments.objects.create(**kwargs)
+    return 
+
+def filter_votes(**kwargs):
+    """
+    Filters votes based on provided criteria.
+    :param kwargs: Filtering criteria such as 'comment_id'.
+    :return: Filtered queryset of votes.
+    """
+    filters = {k: v for k, v in kwargs.items() if v is not None}
+    return Votes.objects.filter(**filters)
+
+def create_vote(**kwargs):
+    """
+    Creates a new vote with the provided data.
+    :param kwargs: Data for the new vote.
+    :return: The created vote instance.
+    """
+    vote = Votes.objects.create(**kwargs)
+    return vote

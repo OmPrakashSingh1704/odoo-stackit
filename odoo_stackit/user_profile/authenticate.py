@@ -8,8 +8,6 @@ class CustomUserBackend(BaseBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
         try:
             user = UserProfile.objects.get(username=username)
-            print(user.password)
-            print(password)
             if user.check_password(password):
                 return user
         except UserProfile.DoesNotExist:

@@ -88,6 +88,14 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'user_profile.authenticate.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
 
 
 # Password validation

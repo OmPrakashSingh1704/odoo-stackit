@@ -15,5 +15,6 @@ class Comments(models.Model):
     
 class Votes(models.Model):
     id = models.UUIDField(primary_key=True)
+    comment = models.ForeignKey(Comments, on_delete=models.DO_NOTHING, related_name='votes', null=True, blank=True)
     total_votes = models.IntegerField(default=0)
     your_vote = models.IntegerField(default=0, choices=[(1, 'Upvote'), (-1, 'Downvote')])

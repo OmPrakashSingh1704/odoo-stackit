@@ -1,13 +1,19 @@
 from questions.models import Question
+from django.core.paginator import Paginator
 
-def filter_questions(**kwargs):
+def filter_questions(page=1, page_size=10, **kwargs):
     """
-    Filters questions based on provided criteria.
+    Filters questions based on provided criteria and paginates the results.
+    :param page: Page number to retrieve.
+    :param page_size: Number of items per page.
     :param kwargs: Filtering criteria such as 'solved', 'author', 'tags', etc.
-    :return: Filtered queryset of questions.
+    :return: A tuple (page_obj, total_count) where page_obj is the paginated page and total_count is total items.
     """
     filters = {k: v for k, v in kwargs.items() if v is not None}
-    return Question.objects.filter(**filters)
+    queryset = Question.objects.filter(**filters)
+    paginator = Paginator(queryset, page_size)
+    page_obj = paginator.get_page(page)
+    return page_obj, paginator.count
 
 def create_question(**kwargs):
     """

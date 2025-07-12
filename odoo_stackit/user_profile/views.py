@@ -4,6 +4,7 @@ from .serializer import UserProfileSerializer
 from rest_framework.response import Response
 from .TokenModel import Token
 from .authenticate import authenticate
+from rest_framework.permissions import IsAuthenticated
 
 class signup(APIView):
     def post(self, request):
@@ -37,6 +38,7 @@ class Login(APIView):
 
 class Logout(APIView):
     def get(self, request):
+        permission_classes = [IsAuthenticated]
         token = request.auth
         if token:
             Token.objects.filter(key=token).delete()
@@ -44,11 +46,14 @@ class Logout(APIView):
         return Response({"error": "Invalid token"}, status=400)
 
 class profile(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         user = request.user
+        print(user)
         if user.is_authenticated:
             serializer = UserProfileSerializer(user)
-            return Response(serializer.data)
+            return Response({"data":serializer.data})
         return Response({"error": "User not authenticated"}, status=401)
 
 
