@@ -70,8 +70,8 @@ export default function ForumPage() {
         <nav className="flex items-center justify-between px-6 py-4 bg-[#2e2e2e]">
           <div className="text-2xl font-bold text-indigo-400">StackIt</div>
           <div className="space-x-4">
-            <button className="bg-indigo-600 px-4 py-1 rounded hover:bg-indigo-500">Login</button>
-            <button className="bg-gray-700 px-4 py-1 rounded hover:bg-gray-600">Sign Up</button>
+            <Link to={"/login"} className="bg-indigo-600 px-4 py-1 rounded hover:bg-indigo-500">Login</Link>
+            <Link to={"/signup"} className="bg-gray-700 px-4 py-1 rounded hover:bg-gray-600">Sign Up</Link>
           </div>
         </nav>
 
