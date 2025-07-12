@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields='__all__'
+        fields=['username', 'first_name', 'last_name', 'email', 'password']
     def validate_email(self, value):
         try:
             validate_email(value)

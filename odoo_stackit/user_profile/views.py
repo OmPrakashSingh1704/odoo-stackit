@@ -3,6 +3,7 @@ from basicLogicBlocks.profile import create_user_profile, get_all_usernames, use
 from .serializer import UserProfileSerializer
 from rest_framework.response import Response
 from .TokenModel import Token
+from .authenticate import authenticate
 
 class signup(APIView):
     def post(self, request):
@@ -22,3 +23,32 @@ class trie(APIView):
         allusers=get_all_usernames()
         trie=username_trie(allusers)
         return Response(trie)
+
+class Login(APIView):
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            token, _ = Token.objects.get_or_create(user=user)
+            return Response({"token": token.key})
+        else:
+            return Response({"error": "Invalid credentials"}, status=401)
+
+class Logout(APIView):
+    def get(self, request):
+        token = request.auth
+        if token:
+            Token.objects.filter(key=token).delete()
+            return Response({"message": "Logged out successfully"}, status=200)
+        return Response({"error": "Invalid token"}, status=400)
+
+class profile(APIView):
+    def get(self, request):
+        user = request.user
+        if user.is_authenticated:
+            serializer = UserProfileSerializer(user)
+            return Response(serializer.data)
+        return Response({"error": "User not authenticated"}, status=401)
+
+

@@ -117,6 +117,10 @@ USE_I18N = True
 
 USE_TZ = True
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Keep the default backend
+    'user_profile.authenticate.CustomUserBackend',  # Add your custom backend
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
