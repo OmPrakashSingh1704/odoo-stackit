@@ -22,6 +22,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
+    reputation = models.IntegerField(default=0)
 
     groups = models.ManyToManyField(Group, related_name="user_profiles")
     user_permissions = models.ManyToManyField(Permission, related_name="user_profiles")
