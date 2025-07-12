@@ -4,7 +4,7 @@ from tinymce.models import HTMLField
 # Create your models here.
 class Comments(models.Model):
     id = models.UUIDField(primary_key=True)
-    previous_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies')
+    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies')
     content = HTMLField('Content')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
