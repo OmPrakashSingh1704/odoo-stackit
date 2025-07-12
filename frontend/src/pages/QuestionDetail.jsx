@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MDEditor from '@uiw/react-md-editor';
 import AnswerCard from '../components/AnswerCard';
+import { useEffect } from 'react';
 
 export default function QuestionDetail() {
-  const { title } = useParams();
   const [answer, setAnswer] = useState('');
   const [showCount, setShowCount] = useState(10);
 
@@ -35,6 +35,8 @@ export default function QuestionDetail() {
       setAnswer('');
     }
   };
+
+
 
   return (
     <div className="bg-gray-900 text-white min-h-screen px-6 py-8">

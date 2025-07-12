@@ -11,10 +11,21 @@ export default function UserLogin() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const  handleSubmit = async (e) => {
     e.preventDefault();
     // Add login logic here
-    console.log(formData);
+    
+
+    const result = await loginUser(formData.username, formData.password);
+
+
+    if (result.success) {
+      setMessage('Login successful!');
+      localStorage.setItem('token', result.token);
+      navigate('/'); // Redirect to home page
+    } else {
+      setMessage(`Login failed: ${result.error}`);
+    }
   };
 
   return (

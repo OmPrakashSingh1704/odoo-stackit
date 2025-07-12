@@ -6,6 +6,7 @@ export default function AskQuestion({ onClose, onSubmit }) {
   const [description, setDescription] = useState('');
   const [tags, setTags] = useState('');
   const [content, setContent] = useState('');
+  const [solvedanswer, setSolved] = useState(false);
 
   const handleSubmit = () => {
     const formattedTags = tags
@@ -17,7 +18,7 @@ export default function AskQuestion({ onClose, onSubmit }) {
       title,
       description,
       tags: formattedTags,
-      content, // markdown text
+      content,
     };
 
     onSubmit(payload);

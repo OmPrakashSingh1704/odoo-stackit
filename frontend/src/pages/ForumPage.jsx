@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import QuestionCard from '../components/QuestionCard';
 import AskQuestion from '../components/AskQuestion';
+import API from '../services/api';
 
 export default function ForumPage() {
 
+  const [questions, setQuestions] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState('all');
 
@@ -13,12 +15,12 @@ export default function ForumPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const questionsPerPage = 10;
 
-  const questions = [...Array(25)].map((_, index) => ({
-    id: index + 1,
-    title: `Sample Question ${index + 1}`,
-    user: `user${index + 1}`,
-    tags: ['javascript', 'react'],
-  }));
+  // const questions = [...Array(25)].map((_, index) => ({
+  //   id: index + 1,
+  //   title: `Sample Question ${index + 1}`,
+  //   user: `user${index + 1}`,
+  //   tags: ['javascript', 'react'],
+  // }));
 
   const totalPages = Math.ceil(questions.length / questionsPerPage);
   const paginated = questions.slice(
@@ -36,6 +38,20 @@ export default function ForumPage() {
 
   const handleSubmitQuestion = (blocks) => {
     console.log('New Question:', blocks);
+    API.post('/questions', blocks);
+
+
+    useEffect(() => {
+      fetch('questions/')
+        .then(res => res.json())
+        .then(data => {
+          console.log('Fetched questions:', data);
+          setQuestions(data);// For now, using static answers
+
+          // You can set state here if you want to display questions
+        })
+        .catch(err => console.error('Error fetching questions:', err));
+    }, []);
     // TODO: Send to backend
   };
 
