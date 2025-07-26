@@ -5,8 +5,11 @@ from rest_framework.response import Response
 from .TokenModel import Token
 from .authenticate import authenticate
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
 
 class signup(APIView):
+    permission_classes = [AllowAny]  # 👈 This is the fix
+
     def post(self, request):
         userdata = request.data
         serializer = UserProfileSerializer(data=userdata)
@@ -50,7 +53,6 @@ class profile(APIView):
 
     def get(self, request):
         user = request.user
-        print(user)
         if user.is_authenticated:
             serializer = UserProfileSerializer(user)
             return Response({"data":serializer.data})
