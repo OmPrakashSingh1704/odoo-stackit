@@ -29,6 +29,7 @@ class trie(APIView):
         return Response(trie)
 
 class Login(APIView):
+    permission_classes=[AllowAny]
     def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
@@ -41,7 +42,7 @@ class Login(APIView):
 
 class Logout(APIView):
     def get(self, request):
-        permission_classes = [IsAuthenticated]
+        
         token = request.auth
         if token:
             Token.objects.filter(key=token).delete()
@@ -49,7 +50,7 @@ class Logout(APIView):
         return Response({"error": "Invalid token"}, status=400)
 
 class profile(APIView):
-    permission_classes = [IsAuthenticated]
+    
 
     def get(self, request):
         user = request.user

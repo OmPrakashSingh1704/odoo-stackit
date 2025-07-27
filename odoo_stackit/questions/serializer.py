@@ -6,4 +6,4 @@ class QuestionSerializer(serializers.ModelSerializer):
     content = serializers.CharField(style={'base_template': 'textarea.html'})
     class Meta:
         model = Question
-        fields = ['title', 'content', 'created_at', 'updated_at', 'solved',  'solvedanswer', 'initial_comments', 'tags']
+        fields = ['title', 'content', 'created_at', 'updated_at', 'solved',  'solvedanswer', 'initial_comments']

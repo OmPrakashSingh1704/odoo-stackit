@@ -1,6 +1,6 @@
-from questions.models import Question
+from questions.models import Question, Tag
 from django.core.paginator import Paginator
-
+import uuid
 def filter_questions(page=1, page_size=10, **kwargs):
     """
     Filters questions based on provided criteria and paginates the results.
@@ -21,7 +21,13 @@ def create_question(**kwargs):
     :param kwargs: Data for the new question.
     :return: The created question instance.
     """
-    question = Question.objects.create(**kwargs)
+    tags = kwargs.pop('tags', [])
+    uuid_tags=[]
+    for tag in tags:
+        tag_obj,_= Tag.objects.get_or_create(name=tag,defaults={'id': uuid.uuid4()})
+        uuid_tags.append(tag_obj)
+    question = Question.objects.create(id=uuid.uuid4(),**kwargs)
+    question.tags.set(uuid_tags)
     return question
 
 def delete_question(**kwargs):

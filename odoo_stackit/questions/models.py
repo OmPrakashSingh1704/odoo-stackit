@@ -16,7 +16,7 @@ class Tag(models.Model):
 # Create your models here.
 class Question(models.Model):
     id=models.UUIDField(primary_key=True)
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200,unique=True)
     content = HTMLField('Content')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

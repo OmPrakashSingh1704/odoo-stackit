@@ -12,18 +12,18 @@ class QuestionsView(APIView):
         return Response({"data": all_questions}, status=200)
 
     def post(self, request):
-        permission_classes = [IsAuthenticated]
+        
         data = request.data
         serializer = QuestionSerializer(data=data)
         if not serializer.is_valid():
             return Response(serializer.errors, status=400)
         user=request.user
         create_questions= create_question(**data, author=user)
-        return Response({"data": create_questions}, status=200)
+        return Response({"data": f"{create_questions.title} is created successfully."}, status=200)
     
     def delete(self, request):
         question_id = request.data.get('id')
-        permission_classes = [IsAuthenticated]
+        
         if not question_id:
             return Response({"error": "Question ID is required"}, status=400)
         
@@ -34,7 +34,7 @@ class QuestionsView(APIView):
             return Response({"error": str(e)}, status=404)
     
     def put(self, request):
-        permission_classes = [IsAuthenticated]
+        
         question_id = request.data.get('id')
         if not question_id:
             return Response({"error": "Question ID is required"}, status=400)

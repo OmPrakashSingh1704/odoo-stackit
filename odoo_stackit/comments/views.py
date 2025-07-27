@@ -12,7 +12,7 @@ class CommentsView(APIView):
     
     def post(self, request):
         from basicLogicBlocks.Comments import create_vote
-        permission_classes = [IsAuthenticated]
+        
         data = request.data
         serializer = CommentSerializer(data=data)
         if not serializer.is_valid():
@@ -22,7 +22,7 @@ class CommentsView(APIView):
         return Response({"data": comment}, status=200)
 
     def delete(self, request):
-        permission_classes = [IsAuthenticated]
+        
         comment_id = request.data.get('id')
         if not comment_id:
             return Response({"error": "Comment ID is required"}, status=400)
@@ -34,7 +34,7 @@ class CommentsView(APIView):
             return Response({"error": str(e)}, status=404)
     
     def put(self, request):
-        permission_classes = [IsAuthenticated]
+        
         comment_id = request.data.get('id')
         if not comment_id:
             return Response({"error": "Comment ID is required"}, status=400)
@@ -62,7 +62,7 @@ class VoteView(APIView):
     
     def post(self, request):
         from basicLogicBlocks.Comments import create_vote
-        permission_classes = [IsAuthenticated]
+        
         data = request.data
         vote = create_vote(**data)
         return Response({"data": vote}, status=200)
