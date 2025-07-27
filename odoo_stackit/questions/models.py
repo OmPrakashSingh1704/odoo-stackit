@@ -21,7 +21,7 @@ class Question(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     solved= models.BooleanField(default=False)
-    author = models.ForeignKey(UserProfile, on_delete=models.DO_NOTHING, related_name='questions')
+    author = models.ForeignKey(UserProfile, on_delete=models.DO_NOTHING, related_name='questions',to_field='username')
     solvedanswer= models.ForeignKey(Comments, on_delete=models.SET_NULL, null=True, blank=True, related_name='solved_questions')
     initial_comments = models.ManyToManyField(Comments, blank=True, related_name='initial_questions')
     tags = models.ManyToManyField(Tag, null=True, blank=True, related_name='tags')

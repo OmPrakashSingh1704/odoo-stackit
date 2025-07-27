@@ -8,8 +8,8 @@ from rest_framework.permissions import IsAuthenticated
 class QuestionsView(APIView):
     def get(self,request):
         data=request.GET.get('data', None)
-        all_questions = filter_questions(**data) if data else filter_questions()
-        return Response({"data": all_questions}, status=200)
+        all_questions,count = filter_questions(**data) if data else filter_questions()
+        return Response({"data": all_questions,"count":count}, status=200)
 
     def post(self, request):
         
