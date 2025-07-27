@@ -13,7 +13,8 @@ def filter_questions(page=1, page_size=10, **kwargs):
     queryset = Question.objects.filter(**filters)
     paginator = Paginator(queryset, page_size)
     page_obj = paginator.get_page(page)
-    return page_obj, paginator.count
+    questions_list = list(page_obj.object_list.values())
+    return questions_list, paginator.count
 
 def create_question(**kwargs):
     """
